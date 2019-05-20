@@ -1,0 +1,17 @@
+Alignment
+
+bowtie2 -p 8 -q NCBIM37.67 SRR066787.fastq -S ES_input.sam
+bowtie2 -p 8 -q NCBIM37.67 SRR066766.fastq -S H3K27ac_rep1.sam
+
+Retaining only best alignments
+samtools view -bS -q 40 ES_input.sam > ES_input_bestAlignment.bam
+samtools view -bS -q 40 H3K27ac_rep1.sam > H3K27ac_rep1_bestAlignment.bam
+
+PCR duplicate removal
+samtools rmdup -s  ES_input_bestAlignment.bam ES_input_filtered.bam
+samtools rmdup -s  H3K27ac_rep1_bestAlignment.bam H3K27ac_rep1_filtered.bam
+
+## macs14 for histone modification command with input
+'''
+macs14 -t NAME_filtered.bam -c NAME_input_filtered.bam -f BAM -g 258189365 -n NAME --single-profile -w --nomodel --call-subpeaks > macs14_output
+'''
