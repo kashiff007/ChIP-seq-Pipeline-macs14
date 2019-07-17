@@ -13,5 +13,5 @@ samtools rmdup -s  H3K27ac_rep1_bestAlignment.bam H3K27ac_rep1_filtered.bam
 
 ## macs14 for histone modification command with input
 '''
-macs14 -t NAME_filtered.bam -c NAME_input_filtered.bam -f BAM -g 258189365 -n NAME --single-profile -w --nomodel --call-subpeaks > macs14_output
+macs14 -t NAME_filtered.bam -c NAME_input_filtered.bam -f BAM -g 119146348 -n NAME --single-profile -w --nomodel --call-subpeaks > macs14_output
 '''
