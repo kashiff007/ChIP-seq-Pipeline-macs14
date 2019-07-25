@@ -15,3 +15,12 @@ samtools rmdup -s  H3K27ac_rep1_bestAlignment.bam H3K27ac_rep1_filtered.bam
 '''
 macs14 -t NAME_filtered.bam -c NAME_input_filtered.bam -f BAM -g 119146348 -n NAME --single-profile -w --nomodel --call-subpeaks > macs14_output
 '''
+
+## Filter bigwig for subset of subpeaks
+'''
+wig2bed < PolII_27_15min_WIP_treat_afterfiting_all.wig > PolII_27_15min_WIP_treat_afterfiting_all.bed
+sort-bed ../../PolII_27_15min_WIP_peaks.subpeaks.bed > ../../PolII_27_15min_WIP_peaks.subpeaks.sorted.bed
+sed -i -e "1d" ../../PolII_27_15min_WIP_peaks.subpeaks.sorted.bed
+bedops --element-of 1 PolII_27_15min_WIP_treat_afterfiting_all.bed ../../PolII_27_15min_WIP_peaks.subpeaks.sorted.bed | awk 'BEGIN{ OFS="\t"; }{ print $1, $2, $3, $5 }' > PolII_27_15min_WIP_treat_afterfiting_all.subset.bedgraph
+~/Software/wigToBigWig/bedGraphToBigWig PolII_27_15min_WIP_treat_afterfiting_all.subset.bedgraph ../../../../../Genome_New_1/TAIR10_1_5.size PolII_27_15min_WIP_treat_afterfiting_all.subset.bw
+'''
