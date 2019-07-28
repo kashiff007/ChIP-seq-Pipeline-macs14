@@ -18,9 +18,11 @@ macs14 -t NAME_filtered.bam -c NAME_input_filtered.bam -f BAM -g 119146348 -n NA
 
 ## Filter bigwig for subset of subpeaks
 '''
-wig2bed < PolII_27_15min_WIP_treat_afterfiting_all.wig > PolII_27_15min_WIP_treat_afterfiting_all.bed
-sort-bed ../../PolII_27_15min_WIP_peaks.subpeaks.bed > ../../PolII_27_15min_WIP_peaks.subpeaks.sorted.bed
-sed -i -e "1d" ../../PolII_27_15min_WIP_peaks.subpeaks.sorted.bed
-bedops --element-of 1 PolII_27_15min_WIP_treat_afterfiting_all.bed ../../PolII_27_15min_WIP_peaks.subpeaks.sorted.bed | awk 'BEGIN{ OFS="\t"; }{ print $1, $2, $3, $5 }' > PolII_27_15min_WIP_treat_afterfiting_all.subset.bedgraph
-~/Software/wigToBigWig/bedGraphToBigWig PolII_27_15min_WIP_treat_afterfiting_all.subset.bedgraph ../../../../../Genome_New_1/TAIR10_1_5.size PolII_27_15min_WIP_treat_afterfiting_all.subset.bw
+gunzip *
+~/Software/wigToBigWig/wigToBigWig HSFA1A_37_15min_WIP_treat_afterfiting_all.wig ../../../Genome_New_1/TAIR10_1_5.size HSFA1A_37_15min_WIP_treat_afterfiting_all.bw
+wig2bed < HSFA1A_37_15min_WIP_treat_afterfiting_all.wig > HSFA1A_37_15min_WIP_treat_afterfiting_all.bed
+sed -i -e "1d" ../../HSFA1A_37_15min_WIP_peaks.subpeaks.bed
+sort-bed ../../HSFA1A_37_15min_WIP_peaks.subpeaks.bed > ../../HSFA1A_37_15min_WIP_peaks.subpeaks.sorted.bed
+bedops --element-of 1 HSFA1A_37_15min_WIP_treat_afterfiting_all.bed ../../HSFA1A_37_15min_WIP_peaks.subpeaks.sorted.bed | awk 'BEGIN{ OFS="\t"; }{ print $1, $2, $3, $5 }' > HSFA1A_37_15min_WIP_treat_afterfiting_all.subset.bedgraph
+~/Software/wigToBigWig/bedGraphToBigWig HSFA1A_37_15min_WIP_treat_afterfiting_all.subset.bedgraph ../../../../Genome_New_1/TAIR10_1_5.size HSFA1A_37_15min_WIP_treat_afterfiting_all.subset.bw
 '''
