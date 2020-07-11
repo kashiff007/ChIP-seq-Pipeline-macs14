@@ -1,15 +1,23 @@
-Alignment
+### Alignment
 
-bowtie2 -p 8 -q NCBIM37.67 SRR066787.fastq -S ES_input.sam
-bowtie2 -p 8 -q NCBIM37.67 SRR066766.fastq -S H3K27ac_rep1.sam
+bowtie2 -x bowtie2_index_folder/aiptasia_genome_final.fa -p 4 -U Symb-3.fastq -S Symb-3.sam
+bowtie2 -x bowtie2_index_folder/aiptasia_genome_final.fa -p 4 -U Symb-3_input.fastq -S Symb-3_input.sam
 
-Retaining only best alignments
-samtools view -bS -q 40 ES_input.sam > ES_input_bestAlignment.bam
-samtools view -bS -q 40 H3K27ac_rep1.sam > H3K27ac_rep1_bestAlignment.bam
+### Sam to sorted bam
+samtools view -u Symb-3.sam | samtools sort -@ 4 -o Symb-3.bam
+samtools view -u Symb-3_input.sam | samtools sort -@ 4 -o Symb-3_input.bam
 
-PCR duplicate removal
-samtools rmdup -s  ES_input_bestAlignment.bam ES_input_filtered.bam
-samtools rmdup -s  H3K27ac_rep1_bestAlignment.bam H3K27ac_rep1_filtered.bam
+### PCR duplicate removal
+samtools rmdup -s  Symb-3.bam Symb-3_filtered.bam
+samtools rmdup -s  Symb-3_input.sam Symb-3_input_filtered.sam
+
+### Indexing bam files
+samtools index Symb-3.bam
+samtools index Symb-3_input.bam
+
+### Computing log2ratio of treatment vs input
+bamCompare --bamfile1 Symb-3 --bamfile2 Symb-3_input --binSize 50 --scaleFactorsMethod SES -o log2ratio_Symb3_vs_Symb3_Input.bw -p 8
+
 
 ## macs14 for histone modification command with input
 '''
