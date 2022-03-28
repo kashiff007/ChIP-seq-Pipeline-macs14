@@ -1,4 +1,4 @@
-###Alignment
+###Alignment 
 
 bowtie2 -x bowtie2_index_folder/aiptasia_genome_final.fa -p 4 -U Symb-3.fastq -S Symb-3.sam
 bowtie2 -x bowtie2_index_folder/aiptasia_genome_final.fa -p 4 -U Symb-3_input.fastq -S Symb-3_input.sam
